@@ -53,8 +53,74 @@ func encodeText(text []rune) (string, []string) {
 	return string(newString), encodedWords
 }
 
+func decodeWord(word []rune, wordLength int, encodedWords []string) string {
+	for index, encodedWord := range encodedWords {
+		if len(encodedWord) != wordLength {
+			continue
+		}
+
+		encoded := []rune(encodedWord)
+		if word[0] != encoded[0] && word[wordLength-1] != encoded[wordLength-1] {
+			continue
+		}
+
+		found := false
+		partOfEncoded := encoded[1 : wordLength-1]
+		for i := 1; i < wordLength-1; i++ {
+			for j, letter := range partOfEncoded {
+				if letter == word[i] {
+					partOfEncoded = append(partOfEncoded[:j], partOfEncoded[j+1:]...)
+					found = true
+					break
+				}
+			}
+
+			if !found {
+				break
+			}
+		}
+
+		if found {
+			encodedWords = append(encodedWords[:index], encodedWords[index+1:]...)
+			return encodedWord
+		}
+	}
+
+	return string(word)
+}
+
+func decodeText(text []rune, encodedWords []string) string {
+	var currentWord []rune
+	var newString []rune
+
+	for _, item := range text {
+		if unicode.IsPunct(item) || unicode.IsSpace(item) {
+			currentWordLength := len(currentWord)
+			if currentWordLength >= 4 {
+				decoded := decodeWord(currentWord, currentWordLength, encodedWords)
+				currentWord = []rune(decoded)
+			}
+
+			for _, letter := range currentWord {
+				newString = append(newString, letter)
+			}
+			currentWord = []rune{}
+
+			newString = append(newString, item)
+			continue
+		}
+
+		currentWord = append(currentWord, item)
+	}
+
+	return string(newString)
+}
+
 func main() {
 	test := `This is a long looong test sentence,
 with some big (biiiiig) words!`
-	fmt.Println(encodeText([]rune(test)))
+
+	encodedText, encodedWords := encodeText([]rune(test))
+	fmt.Println(encodedText, encodedWords)
+	fmt.Println(decodeText([]rune(encodedText), encodedWords))
 }
