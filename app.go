@@ -3,18 +3,14 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"sort"
 	"unicode"
 )
 
-func encodeWord(word []rune) []rune {
-	wordLength := len(word)
-	if wordLength < 4 {
-		return word
-	}
-
+func encodeWord(word []rune, wordLength int) {
 	if wordLength == 4 {
 		word[1], word[2] = word[2], word[1]
-		return word
+		return
 	}
 
 	toShuffle := word[1 : wordLength-1]
@@ -23,16 +19,26 @@ func encodeWord(word []rune) []rune {
 		toShuffle[i], toShuffle[j] = toShuffle[j], toShuffle[i]
 	})
 
-	return word
+	return
 }
 
-func processText(text []rune) string {
+func processText(text []rune) (string, []string) {
 	var currentWord []rune
 	var newString []rune
+	var encodedWords []string
 
 	for _, item := range text {
 		if unicode.IsPunct(item) || unicode.IsSpace(item) {
-			currentWord = encodeWord(currentWord)
+			currentWordLength := len(currentWord)
+			if currentWordLength >= 4 {
+				beforeEncoding := string(currentWord)
+				encodeWord(currentWord, currentWordLength)
+
+				if string(currentWord) != beforeEncoding {
+					encodedWords = append(encodedWords, beforeEncoding)
+				}
+			}
+
 			for _, letter := range currentWord {
 				newString = append(newString, letter)
 			}
@@ -45,7 +51,8 @@ func processText(text []rune) string {
 		currentWord = append(currentWord, item)
 	}
 
-	return string(newString)
+	sort.Strings(encodedWords)
+	return string(newString), encodedWords
 }
 
 func main() {
