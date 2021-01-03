@@ -53,7 +53,7 @@ func encodeText(text []rune) (string, []string) {
 	return string(newString), encodedWords
 }
 
-func decodeWord(word []rune, wordLength int, encodedWords []string) string {
+func decodeWord(word []rune, wordLength int, encodedWords []string) (string, []string) {
 	for index, encodedWord := range encodedWords {
 		if len(encodedWord) != wordLength {
 			continue
@@ -69,7 +69,10 @@ func decodeWord(word []rune, wordLength int, encodedWords []string) string {
 		for i := 1; i < wordLength-1; i++ {
 			for j, letter := range partOfEncoded {
 				if letter == word[i] {
-					partOfEncoded = append(partOfEncoded[:j], partOfEncoded[j+1:]...)
+					var newPartOfEncoded []rune
+					newPartOfEncoded = append(newPartOfEncoded, partOfEncoded[:j]...)
+					newPartOfEncoded = append(newPartOfEncoded, partOfEncoded[j+1:]...)
+					partOfEncoded = newPartOfEncoded
 					found = true
 					break
 				}
@@ -81,12 +84,14 @@ func decodeWord(word []rune, wordLength int, encodedWords []string) string {
 		}
 
 		if found {
-			encodedWords = append(encodedWords[:index], encodedWords[index+1:]...)
-			return encodedWord
+			var newEncodedWords []string
+			newEncodedWords = append(newEncodedWords, encodedWords[:index]...)
+			newEncodedWords = append(newEncodedWords, encodedWords[index+1:]...)
+			return encodedWord, newEncodedWords
 		}
 	}
 
-	return string(word)
+	return string(word), encodedWords
 }
 
 func decodeText(text []rune, encodedWords []string) string {
@@ -97,7 +102,8 @@ func decodeText(text []rune, encodedWords []string) string {
 		if unicode.IsPunct(item) || unicode.IsSpace(item) {
 			currentWordLength := len(currentWord)
 			if currentWordLength >= 4 {
-				decoded := decodeWord(currentWord, currentWordLength, encodedWords)
+				var decoded string
+				decoded, encodedWords = decodeWord(currentWord, currentWordLength, encodedWords)
 				currentWord = []rune(decoded)
 			}
 
