@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"math/rand"
 	"sort"
 	"unicode"
@@ -20,7 +19,8 @@ func encodeWord(word []rune, wordLength int) {
 	})
 }
 
-func encodeText(text []rune) (string, []string) {
+//EncodeText returns encoded provided text and sorted array of encoded words
+func EncodeText(text []rune) (string, []string) {
 	var currentWord []rune
 	var newString []rune
 	var encodedWords []string
@@ -96,7 +96,8 @@ func decodeWord(word []rune, wordLength int, encodedWords []string) (string, []s
 	return string(word), encodedWords
 }
 
-func decodeText(text []rune, encodedWords []string) string {
+//DecodeText returns decoded provided text using provided array of encoded words
+func DecodeText(text []rune, encodedWords []string) string {
 	var currentWord []rune
 	var newString []rune
 
@@ -122,13 +123,4 @@ func decodeText(text []rune, encodedWords []string) string {
 	}
 
 	return string(newString)
-}
-
-func main() {
-	test := `This is a long looong test sentence,
-with some big (biiiiig) words!`
-
-	encodedText, encodedWords := encodeText([]rune(test))
-	fmt.Println(encodedText, encodedWords)
-	fmt.Println(decodeText([]rune(encodedText), encodedWords))
 }
