@@ -76,11 +76,7 @@ func decodeWord(word []rune, wordLength int, encodedWords []string) (string, []s
 			continue
 		}
 
-		if word[0] != encoded[0] {
-			continue
-		}
-
-		if word[wordLength-1] != encoded[wordLength-1] {
+		if word[0] != encoded[0] || word[wordLength-1] != encoded[wordLength-1] {
 			continue
 		}
 
