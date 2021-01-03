@@ -32,3 +32,17 @@ func TestDecodeEncode(t *testing.T) {
 		}
 	}
 }
+
+func TestSerializeEncodedText(t *testing.T) {
+	expected := `
+---weird---
+Tihs is a lnog loonog tset sneetcne,
+wtih smoe big (biiiiig) wodrs!
+---weird---
+This long looong sentence some test with words`
+
+	encoded := EncodeText("This is a long looong test sentence,\nwith some big (biiiiig) words!")
+	if encoded.String() != expected {
+		t.Errorf("Serialization error!\nShould be:%s\nIs:%s", expected, encoded.String())
+	}
+}

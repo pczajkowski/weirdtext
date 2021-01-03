@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 type EncodedText struct {
@@ -10,5 +11,5 @@ type EncodedText struct {
 }
 
 func (e EncodedText) String() string {
-	return fmt.Sprintf("\n---weird---\n%s\n---weird---\n%v", e.text, e.encodedWords)
+	return fmt.Sprintf("\n---weird---\n%s\n---weird---\n%v", e.text, strings.Join(e.encodedWords, " "))
 }
