@@ -22,7 +22,7 @@ func encodeWord(word []rune, wordLength int) {
 	return
 }
 
-func processText(text []rune) (string, []string) {
+func encodeText(text []rune) (string, []string) {
 	var currentWord []rune
 	var newString []rune
 	var encodedWords []string
@@ -58,5 +58,5 @@ func processText(text []rune) (string, []string) {
 func main() {
 	test := `This is a long looong test sentence,
 with some big (biiiiig) words!`
-	fmt.Println(processText([]rune(test)))
+	fmt.Println(encodeText([]rune(test)))
 }
