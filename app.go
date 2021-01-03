@@ -53,6 +53,14 @@ func encodeText(text []rune) (string, []string) {
 	return string(newString), encodedWords
 }
 
+func removeString(array []string, index int) []string {
+	return append(array[:index], array[index+1:]...)
+}
+
+func removeRune(array []rune, index int) []rune {
+	return append(array[:index], array[index+1:]...)
+}
+
 func decodeWord(word []rune, wordLength int, encodedWords []string) (string, []string) {
 	for index, encodedWord := range encodedWords {
 		if len(encodedWord) != wordLength {
@@ -69,10 +77,7 @@ func decodeWord(word []rune, wordLength int, encodedWords []string) (string, []s
 		for i := 1; i < wordLength-1; i++ {
 			for j, letter := range partOfEncoded {
 				if letter == word[i] {
-					var newPartOfEncoded []rune
-					newPartOfEncoded = append(newPartOfEncoded, partOfEncoded[:j]...)
-					newPartOfEncoded = append(newPartOfEncoded, partOfEncoded[j+1:]...)
-					partOfEncoded = newPartOfEncoded
+					partOfEncoded = removeRune(partOfEncoded, j)
 					found = true
 					break
 				}
@@ -84,10 +89,7 @@ func decodeWord(word []rune, wordLength int, encodedWords []string) (string, []s
 		}
 
 		if found {
-			var newEncodedWords []string
-			newEncodedWords = append(newEncodedWords, encodedWords[:index]...)
-			newEncodedWords = append(newEncodedWords, encodedWords[index+1:]...)
-			return encodedWord, newEncodedWords
+			return encodedWord, removeString(encodedWords, index)
 		}
 	}
 
