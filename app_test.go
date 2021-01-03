@@ -13,6 +13,7 @@ func TestDecodeEncode(t *testing.T) {
 	testCases := []testCase{
 		{"This is a long looong test sentence,\nwith some big (biiiiig) words!", 8},
 		{"Pre-translation generally means applying the TM(s) to one or more files as whole instead of moving segment by segment.", 11},
+		{"Szła dzieweczka do laseczka\nDo zielonego, do zielonego, do zielonego.\nNapotkała myśliweczka\nBardzo szwarnego, bardzo szwarnego, bardzo szwarnego.", 14},
 	}
 
 	for _, item := range testCases {
@@ -33,32 +34,14 @@ func TestDecodeEncode(t *testing.T) {
 	}
 }
 
-func TestSerializeEncodedText(t *testing.T) {
-	expected := `
----weird---
-Tihs is a lnog loonog tset sneetcne,
-wtih smoe big (biiiiig) wodrs!
----weird---
-This long looong sentence some test with words`
-
-	encoded := EncodeText("This is a long looong test sentence,\nwith some big (biiiiig) words!")
-	if encoded.String() != expected {
-		t.Errorf("Serialization error!\nShould be:%s\nIs:%s", expected, encoded.String())
-	}
-}
-
-func TestDeserializeEncodedText(t *testing.T) {
-	serialized := `
----weird---
-Tihs is a lnog loonog tset sneetcne,
-wtih smoe big (biiiiig) wodrs!
----weird---
-This long looong sentence some test with words`
-
+func TestSerializeDeserializeEncodedText(t *testing.T) {
 	expected := "This is a long looong test sentence,\nwith some big (biiiiig) words!"
 
-	encoded := EncodedText{}
-	err := encoded.FromString(serialized)
+	encoded := EncodeText(expected)
+	serialized := encoded.String()
+
+	toDecode := EncodedText{}
+	err := toDecode.FromString(serialized)
 	if err != nil {
 		t.Errorf("Error deserializing encoded text: %s", err)
 	}

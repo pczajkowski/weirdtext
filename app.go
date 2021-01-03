@@ -71,12 +71,16 @@ func removeRune(array []rune, index int) []rune {
 
 func decodeWord(word []rune, wordLength int, encodedWords []string) (string, []string) {
 	for index, encodedWord := range encodedWords {
-		if len(encodedWord) != wordLength {
+		encoded := []rune(encodedWord)
+		if len(encoded) != wordLength {
 			continue
 		}
 
-		encoded := []rune(encodedWord)
-		if word[0] != encoded[0] && word[wordLength-1] != encoded[wordLength-1] {
+		if word[0] != encoded[0] {
+			continue
+		}
+
+		if word[wordLength-1] != encoded[wordLength-1] {
 			continue
 		}
 
