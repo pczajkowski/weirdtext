@@ -18,8 +18,6 @@ func encodeWord(word []rune, wordLength int) {
 	rand.Shuffle(toShuffleLength, func(i, j int) {
 		toShuffle[i], toShuffle[j] = toShuffle[j], toShuffle[i]
 	})
-
-	return
 }
 
 func encodeText(text []rune) (string, []string) {
