@@ -26,7 +26,7 @@ func TestDecodeEncode(t *testing.T) {
 			t.Errorf("There should be %d encoded words instead of %d! %v", item.count, count, encoded.EncodedWords)
 		}
 
-		decodedText := DecodeText(encoded.Text, encoded.EncodedWords)
+		decodedText := DecodeText(encoded)
 		if decodedText != item.text {
 			t.Errorf("Decoded text '%s' should be same as expected text '%s'!", decodedText, item.text)
 		}
@@ -63,7 +63,7 @@ This long looong sentence some test with words`
 		t.Errorf("Error deserializing encoded text: %s", err)
 	}
 
-	decodedText := DecodeText(encoded.Text, encoded.EncodedWords)
+	decodedText := DecodeText(encoded)
 	if decodedText != expected {
 		t.Errorf("Decoded text '%s' should be same as expected text '%s'!", decodedText, expected)
 	}

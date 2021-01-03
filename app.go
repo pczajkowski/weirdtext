@@ -105,8 +105,11 @@ func decodeWord(word []rune, wordLength int, encodedWords []string) (string, []s
 }
 
 //DecodeText returns decoded provided text using provided array of encoded words
-func DecodeText(text string, encodedWords []string) string {
-	runes := []rune(text)
+func DecodeText(encoded EncodedText) string {
+	runes := []rune(encoded.Text)
+	encodedWords := make([]string, len(encoded.EncodedWords))
+	copy(encodedWords, encoded.EncodedWords)
+
 	var currentWord []rune
 	var newString []rune
 
