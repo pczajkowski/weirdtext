@@ -27,12 +27,13 @@ func encodeWord(word []rune, wordLength int) {
 }
 
 //EncodeText returns encoded provided text and sorted array of encoded words
-func EncodeText(text []rune) (string, []string) {
+func EncodeText(text string) (string, []string) {
+	runes := []rune(text)
 	var currentWord []rune
 	var newString []rune
 	var encodedWords []string
 
-	for _, item := range text {
+	for _, item := range runes {
 		if unicode.IsPunct(item) || unicode.IsSpace(item) {
 			currentWordLength := len(currentWord)
 			if currentWordLength >= 4 {
@@ -104,11 +105,12 @@ func decodeWord(word []rune, wordLength int, encodedWords []string) (string, []s
 }
 
 //DecodeText returns decoded provided text using provided array of encoded words
-func DecodeText(text []rune, encodedWords []string) string {
+func DecodeText(text string, encodedWords []string) string {
+	runes := []rune(text)
 	var currentWord []rune
 	var newString []rune
 
-	for _, item := range text {
+	for _, item := range runes {
 		if unicode.IsPunct(item) || unicode.IsSpace(item) {
 			currentWordLength := len(currentWord)
 			if currentWordLength >= 4 {

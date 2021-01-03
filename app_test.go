@@ -16,7 +16,7 @@ func TestDecodeEncode(t *testing.T) {
 	}
 
 	for _, item := range testCases {
-		encodedText, encodedWords := EncodeText([]rune(item.text))
+		encodedText, encodedWords := EncodeText(item.text)
 		if encodedText == item.text {
 			t.Errorf("Encoded text '%s' should be different than provided text '%s'!", encodedText, item.text)
 		}
@@ -26,7 +26,7 @@ func TestDecodeEncode(t *testing.T) {
 			t.Errorf("There should be %d encoded words instead of %d! %v", item.count, count, encodedWords)
 		}
 
-		decodedText := DecodeText([]rune(encodedText), encodedWords)
+		decodedText := DecodeText(encodedText, encodedWords)
 		if decodedText != item.text {
 			t.Errorf("Decoded text '%s' should be same as provided text '%s'!", decodedText, item.text)
 		}
