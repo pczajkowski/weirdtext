@@ -13,7 +13,7 @@ func encodeWord(word []rune) []rune {
 	}
 
 	if wordLength == 4 {
-		word[2], word[3] = word[3], word[2]
+		word[1], word[2] = word[2], word[1]
 		return word
 	}
 
@@ -31,18 +31,7 @@ func processText(text []rune) string {
 	var newString []rune
 
 	for _, item := range text {
-		if unicode.IsPunct(item) {
-			currentWord = encodeWord(currentWord)
-			for _, letter := range currentWord {
-				newString = append(newString, letter)
-			}
-			currentWord = []rune{}
-
-			newString = append(newString, item)
-			continue
-		}
-
-		if unicode.IsSpace(item) {
+		if unicode.IsPunct(item) || unicode.IsSpace(item) {
 			currentWord = encodeWord(currentWord)
 			for _, letter := range currentWord {
 				newString = append(newString, letter)
