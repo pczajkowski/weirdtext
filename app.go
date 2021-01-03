@@ -27,7 +27,7 @@ func encodeWord(word []rune, wordLength int) {
 }
 
 //EncodeText returns encoded provided text and sorted array of encoded words
-func EncodeText(text string) (string, []string) {
+func EncodeText(text string) EncodedText {
 	runes := []rune(text)
 	var currentWord []rune
 	var newString []rune
@@ -58,7 +58,7 @@ func EncodeText(text string) (string, []string) {
 	}
 
 	sort.Strings(encodedWords)
-	return string(newString), encodedWords
+	return EncodedText{string(newString), encodedWords}
 }
 
 func removeString(array []string, index int) []string {
