@@ -4,21 +4,31 @@ import (
 	"testing"
 )
 
+type testCase struct {
+	text  string
+	count int
+}
+
 func TestDecodeEncode(t *testing.T) {
-	text := `This is a long looong test sentence,
-with some big (biiiiig) words!`
-
-	encodedText, encodedWords := EncodeText([]rune(text))
-	if encodedText == text {
-		t.Errorf("Encoded text '%s' should be different than provided text '%s'!", encodedText, text)
+	testCases := []testCase{
+		{"This is a long looong test sentence,\nwith some big (biiiiig) words!", 8},
+		{"Pre-translation generally means applying the TM(s) to one or more files as whole instead of moving segment by segment.", 11},
 	}
 
-	if len(encodedWords) != 8 {
-		t.Errorf("There should be 8 encoded words! %v", encodedWords)
-	}
+	for _, item := range testCases {
+		encodedText, encodedWords := EncodeText([]rune(item.text))
+		if encodedText == item.text {
+			t.Errorf("Encoded text '%s' should be different than provided text '%s'!", encodedText, item.text)
+		}
 
-	decodedText := DecodeText([]rune(encodedText), encodedWords)
-	if decodedText != text {
-		t.Errorf("Decoded text '%s' should be same as provided text '%s'!", decodedText, text)
+		count := len(encodedWords)
+		if count != item.count {
+			t.Errorf("There should be %d encoded words instead of %d! %v", item.count, count, encodedWords)
+		}
+
+		decodedText := DecodeText([]rune(encodedText), encodedWords)
+		if decodedText != item.text {
+			t.Errorf("Decoded text '%s' should be same as provided text '%s'!", decodedText, item.text)
+		}
 	}
 }

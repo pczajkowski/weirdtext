@@ -12,11 +12,18 @@ func encodeWord(word []rune, wordLength int) {
 		return
 	}
 
+	original := string(word)
 	toShuffle := word[1 : wordLength-1]
 	toShuffleLength := wordLength - 2
 	rand.Shuffle(toShuffleLength, func(i, j int) {
 		toShuffle[i], toShuffle[j] = toShuffle[j], toShuffle[i]
 	})
+
+	if string(word) == original {
+		rand.Shuffle(toShuffleLength, func(i, j int) {
+			toShuffle[i], toShuffle[j] = toShuffle[j], toShuffle[i]
+		})
+	}
 }
 
 //EncodeText returns encoded provided text and sorted array of encoded words
