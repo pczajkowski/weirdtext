@@ -10,16 +10,20 @@ type EncodedText struct {
 	EncodedWords []string
 }
 
+const (
+	prefix = "\n---weird---\n"
+)
+
 func (e EncodedText) String() string {
-	return fmt.Sprintf("\n---weird---\n%s\n---weird---\n%v", e.Text, strings.Join(e.EncodedWords, " "))
+	return fmt.Sprintf("%s%s%s%v", prefix, e.Text, prefix, strings.Join(e.EncodedWords, " "))
 }
 
 func (e *EncodedText) FromString(serialized string) error {
-	if !strings.HasPrefix(serialized, "\n---weird---\n") {
+	if !strings.HasPrefix(serialized, prefix) {
 		return fmt.Errorf("Invalid prefix: %s", serialized)
 	}
 
-	parts := strings.Split(serialized, "\n---weird---\n")
+	parts := strings.Split(serialized, prefix)
 	if len(parts) != 3 {
 		return fmt.Errorf("Invalid string: %s", serialized)
 	}
