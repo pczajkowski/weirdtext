@@ -49,7 +49,7 @@ func TestSerializeDeserializeEncodedText(t *testing.T) {
 		t.Errorf("Error deserializing encoded text: %s", err)
 	}
 
-	decodedText := DecodeText(encoded)
+	decodedText := DecodeText(toDecode)
 	if decodedText != expected {
 		t.Errorf("Decoded text '%s' should be same as expected text '%s'!", decodedText, expected)
 	}
