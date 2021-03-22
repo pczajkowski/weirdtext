@@ -28,7 +28,15 @@ func (e *EncodedText) FromString(serialized string) error {
 		return fmt.Errorf("Invalid string: %s", serialized)
 	}
 
+	if parts[1] == "" {
+		return fmt.Errorf("There's no encoded text: %s", serialized)
+	}
 	e.Text = parts[1]
+
+	if parts[2] == "" {
+		return fmt.Errorf("There are no encoded words: %s", serialized)
+	}
 	e.EncodedWords = strings.Split(parts[2], " ")
+
 	return nil
 }
