@@ -83,17 +83,21 @@ func decodeWord(word []rune, wordLength int, encodedWords []string) (string, []s
 		found := false
 		partOfEncoded := encoded[1 : wordLength-1]
 		for i := 1; i < wordLength-1; i++ {
+			letterFound := false
 			for j, letter := range partOfEncoded {
 				if letter == word[i] {
 					partOfEncoded = removeRune(partOfEncoded, j)
-					found = true
+					letterFound = true
 					break
 				}
 			}
 
-			if !found {
+			if !letterFound {
+				found = false
 				break
 			}
+
+			found = true
 		}
 
 		if found {

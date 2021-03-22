@@ -17,6 +17,7 @@ func TestDecodeEncode(t *testing.T) {
 		{"新型コロナウィルス感染症拡大防止のため，一部在宅勤務等による接触機会削減を実施しています。電話，FAX，郵便，メールフォーム等でのお問い合わせにつきましては，対応にお時間をいただく場合がありますので，予めご了承ください。また，一般の方の建物内への立入は，当面の間ご遠慮いただいております。みなさまにはご不便をおかけしますが，なにとぞご理解・ご協力のほどよろしくお願い申し上げます。", 10},
 		{"Lorem ipsum dolor sit amet, est in aliquip aperiam. Sea te feugiat labores voluptatibus, pri ea affert ubique noluisse! No usu dolorum mentitum, sed eros nihil singulis ad? Has liber putent percipit et, vel te iriure intellegat. Eu dicam placerat has, id eos omittam facilisi, pertinacia constituto te has?", 28},
 		{"Λορεμ ιπσθμ δολορ σιτ αμετ, λορεμ λαβοραμθσ ει μελ, cονσετετθρ δεφινιτιονεσ αν εοσ. Εα ηαρθμ cονcλθδατθρqθε περ? Νε ηισ vιvενδθμ μανδαμθσ! Αδ τραcτατοσ δισπθτανδο ιθσ, θτ εστ λαθδεμ μινιμθμ ιντελλεγαμ.", 17},
+		{"Szła dzieweczka do laseczka\nDo zielunego, do zielonego, do zielonego.\nNapotkała myśliweczka\nBardzo szwarnego, bardzo szwarnego, bardzo szwarnego.", 14},
 	}
 
 	for _, item := range testCases {
